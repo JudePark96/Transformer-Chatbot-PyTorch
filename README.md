@@ -5,4 +5,4 @@ Implementation of Basic Conversational Agent(a.k.a Chatbot) using PyTorch Transf
 TODO => Adding introduction post.
 
 # Reference
-- [Conversation Data in Korea by @songys](https://github.com/songys/Chatbot_data)
+- [Conversation Data in Korean by @songys](https://github.com/songys/Chatbot_data)
