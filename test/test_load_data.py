@@ -25,9 +25,6 @@ class TestLoadData(object):
         assert file_path.split('/')[-1].split('.')[-1] == target_file_type
 
     def test_load_corpus(self, file_path: str):
-        if file_path.split('/')[-1].split('.')[-1] != 'csv':
-            raise ValueError('invalid file path')
-
         df = pd.read_csv(file_path, header=0)
 
         q, a = list(df['Q']), list(df['A'])
