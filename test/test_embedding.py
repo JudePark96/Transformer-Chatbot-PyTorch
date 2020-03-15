@@ -7,7 +7,7 @@ import pytest
 import torch
 
 
-class TestLSTMClass(object):
+class TestEmbedding(object):
     @pytest.fixture
     def seqs(self):
         # bs * seq_len
