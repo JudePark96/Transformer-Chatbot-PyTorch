@@ -36,3 +36,6 @@ class TestVocab(object):
         idxs_ = [vocab.get_token2idx(token) for token in tokens]
 
         assert idxs == idxs_
+
+    def test_unregistered_token_return_unk(self, vocab):
+        assert vocab.get_token2idx(token='내이름은이효리거꾸로해도이효리') == 0
