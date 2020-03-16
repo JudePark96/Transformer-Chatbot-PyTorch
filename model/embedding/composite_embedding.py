@@ -1,3 +1,8 @@
+"""
+Author: Jude Park <judepark@kookmin.ac.kr>
+"""
+
+
 from model.embedding.positional_embedding import PositionalEmbedding
 from model.embedding.token_embedding import TokenEmbedding
 from torch.nn import Module
