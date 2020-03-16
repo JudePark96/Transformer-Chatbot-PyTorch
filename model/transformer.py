@@ -35,8 +35,8 @@ class Net(Module):
         :param answer: [bs x seq_len]
         :return:
         """
-        q_embed = self.embedding(question.long())
-        a_embed = self.embedding(answer.long())
+        q_embed = self.embedding(question.long().to(get_device_setting()))
+        a_embed = self.embedding(answer.long().to(get_device_setting()))
 
         q_mask = question == self.args['pad_idx']
         a_mask = answer == self.args['pad_idx']
@@ -50,9 +50,9 @@ class Net(Module):
 
         attn = self.transformer(src=q_embed,
                                 tgt=a_embed,
-                                src_key_padding_mask=q_mask,
-                                tgt_key_padding_mask=a_mask,
-                                memory_key_padding_mask=mem_q_mask,
+                                src_key_padding_mask=q_mask.to(get_device_setting()),
+                                tgt_key_padding_mask=a_mask.to(get_device_setting()),
+                                memory_key_padding_mask=mem_q_mask.to(get_device_setting()),
                                 tgt_mask=tgt_mask.to(get_device_setting()))
 
         attn = T.einsum('ijk->jik', attn)

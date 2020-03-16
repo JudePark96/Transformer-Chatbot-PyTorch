@@ -39,7 +39,7 @@ class Trainer(object):
         self.train_loss = []
 
         # define what loss function is.
-        self.loss_fn = CrossEntropyLoss(ignore_index=self.args['pad_idx'])
+        self.loss_fn = CrossEntropyLoss(ignore_index=self.args['pad_idx']).to(get_device_setting())
 
     def train(self, epoch: int, train_loader: DataLoader, valid_loader: DataLoader) -> None:
 
@@ -53,7 +53,7 @@ class Trainer(object):
                 output = self.model(question, answer)
                 output = output.view(-1, output.size(-1))
                 answer = answer.view(-1).long()
-                loss = self.loss_fn(output, answer)
+                loss = self.loss_fn(output, answer.to(get_device_setting()))
                 print(f'********** training loss: {loss.item()} **********')
                 loss.backward()
                 self.optimizer.step()
@@ -71,7 +71,7 @@ class Trainer(object):
             output = self.model(question, answer)
             output = output.view(-1, output.size(-1))
             answer = answer.view(-1).long()
-            loss = self.loss_fn(output, answer)
+            loss = self.loss_fn(output, answer.to(get_device_setting()))
             print(f'********** evaluating loss: {loss.item()} **********')
 
 

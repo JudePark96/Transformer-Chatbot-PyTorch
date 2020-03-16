@@ -20,5 +20,5 @@ class CombineEmbedding(Module):
         token_embed = self.token_embedding(x)
         pos_embed = self.pos_embedding(x)
 
-        print(f'token_embedding: {token_embed.shape}, positional_embedding: {pos_embed.shape}')
+        # print(f'token_embedding: {token_embed.shape}, positional_embedding: {pos_embed.shape}')
         return token_embed + pos_embed

@@ -19,8 +19,9 @@ if __name__ == '__main__':
     vocab = Vocabulary(corpus)
     vocab.build_vocab()
     loader = get_loader(train, train_y, vocab, 64, 32, True)
+    valid_loader = get_loader(valid, valid_y, vocab, 64, 32, True)
     args = get_base_config()
 
     model = Net(args).to(get_device_setting())
     optimizer = optim.Adam(params=model.parameters(), lr=args['lr'])
-    Trainer(args, vocab, model, optimizer).train(1, loader)
+    Trainer(args, vocab, model, optimizer, '/workspace/nlp-jude/Transformer-Chatbot-PyTorch/rsc/output/').train(10, loader, valid_loader)
