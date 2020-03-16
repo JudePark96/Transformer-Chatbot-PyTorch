@@ -20,18 +20,26 @@ if __name__ == '__main__':
 
     parser.add_argument('--data_path', type=str, required=True)
     parser.add_argument('--output_path', type=str, required=True)
+    parser.add_argument('--max_len', type=int, required=True)
+    parser.add_argument('--batch_size', type=int, required=True)
 
     args = parser.parse_args()
+
     data_path = args.data_path
     output_path = args.output_path
+    max_len = args.max_len
+    bs = args.batch_size
 
     train, valid, train_y, valid_y, corpus = load_data(data_path)
     vocab = Vocabulary(corpus)
     vocab.build_vocab()
 
-    train_loader = get_loader(train, train_y, vocab, 64, 32, True)
-    valid_loader = get_loader(valid, valid_y, vocab, 64, 32, True)
     model_args = get_base_config()
+    model_args['max_len'] = max_len
+
+    train_loader = get_loader(train, train_y, vocab, max_len, bs, True)
+    valid_loader = get_loader(valid, valid_y, vocab, max_len, bs, True)
+
 
     model = Net(model_args).to(get_device_setting())
     optimizer = optim.Adam(params=model.parameters(), lr=model_args['lr'])
