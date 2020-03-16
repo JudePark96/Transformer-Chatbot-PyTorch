@@ -27,7 +27,7 @@ def get_base_config() -> OrderedDict:
         'dropout_rate': 0.25,
         'hidden_size': 256,
         'pad_idx':1,
-        'vocab_size': 6852,
+        'vocab_size': 6854,
         'nhead':8,
         'max_len': 64,
     })

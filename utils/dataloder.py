@@ -22,23 +22,30 @@ class ConversationDataset(Dataset):
         self.tokenizer = Mecab()
 
     def __getitem__(self, idx: int):
-        q_tokenized = self.tokenizer.morphs(self.question[idx])
-        a_tokenized = self.tokenizer.morphs(self.answer[idx])
+        q_tokenized = [self.vocab.special_tokens[2]] + self.tokenizer.morphs(self.question[idx])
+        a_tokenized = self.tokenizer.morphs(self.answer[idx]) + [self.vocab.special_tokens[3]]
+
+        print(q_tokenized, a_tokenized)
+
 
         q_len = len(q_tokenized)
         a_len = len(a_tokenized)
+
+        print(q_len, a_len)
 
         q = T.ones(self.max_len).long()
         a = T.ones(self.max_len).long()
 
         q_tensor = T.LongTensor([self.vocab.get_token2idx(word)
-                                 for word in self.tokenizer.morphs(self.question[idx])])
+                                 for word in q_tokenized])
 
         a_tensor = T.LongTensor([self.vocab.get_token2idx(word)
-                                 for word in self.tokenizer.morphs(self.answer[idx])])
+                                 for word in a_tokenized])
 
         q[:q_len] = q_tensor
         a[:a_len] = a_tensor
+
+        print(q, a)
 
         return q, a
 

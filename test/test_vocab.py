@@ -30,6 +30,12 @@ class TestVocab(object):
     def test_pad_check(self, vocab):
         assert vocab.idx2token[1] == '<pad>'
 
+    def test_sos_check(self, vocab):
+        assert vocab.idx2token[2] == '<sos>'
+
+    def test_eos_check(self, vocab):
+        assert vocab.idx2token[3] == '<eos>'
+
     def test_equals_idx2token_token2idx(self, vocab):
         idxs = [2, 4, 6, 8]
         tokens = [vocab.get_idx2token(idx) for idx in idxs]
@@ -41,4 +47,4 @@ class TestVocab(object):
         assert vocab.get_token2idx(token='내이름은이효리거꾸로해도이효리') == 0
 
     def test_vocab_size(self, vocab):
-        assert vocab.get_vocab_size() == 6852
+        assert vocab.get_vocab_size() == 6854

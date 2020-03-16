@@ -29,6 +29,8 @@ class Vocabulary(object):
         self.special_tokens = [
             '<unk>',
             '<pad>',
+            '<sos>',
+            '<eos>'
         ]
 
         # initiate token dictionary, when initiated vocabulary class.
