@@ -39,3 +39,6 @@ class TestVocab(object):
 
     def test_unregistered_token_return_unk(self, vocab):
         assert vocab.get_token2idx(token='내이름은이효리거꾸로해도이효리') == 0
+
+    def test_vocab_size(self, vocab):
+        assert vocab.get_vocab_size() == 6852
