@@ -59,7 +59,7 @@ class Trainer(object):
                 loss.backward()
                 self.optimizer.step()
 
-                if (i + 1) % 100:
+                if (i + 1) % 100 == 0:
                     self.evaluate(i, valid_loader)
                     T.save(self.model.state_dict(), self.output_path + f'model-{ep_iter}-{i}.pt')
 
