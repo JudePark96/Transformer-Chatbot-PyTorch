@@ -4,6 +4,7 @@ Author: Jude Park <judepark@kookmin.ac.kr>
 
 
 from model.embedding.composite_embedding import CombineEmbedding
+from config.base_experiment_config import get_device_setting
 from torch.nn.modules.transformer import Transformer
 from torch.nn import Module
 
@@ -52,7 +53,7 @@ class Net(Module):
                                 src_key_padding_mask=q_mask,
                                 tgt_key_padding_mask=a_mask,
                                 memory_key_padding_mask=mem_q_mask,
-                                tgt_mask=tgt_mask)
+                                tgt_mask=tgt_mask.to(get_device_setting()))
 
         logits = T.einsum('ijk->jik', self.projection(attn))
 
