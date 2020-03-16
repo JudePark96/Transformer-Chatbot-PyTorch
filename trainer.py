@@ -59,7 +59,7 @@ class Trainer(object):
                 loss.backward()
                 self.optimizer.step()
 
-                if (i + 1) % 100 == 0:
+                if (i + 1) % 100 == 0 and epoch > 2:
                     self.evaluate(i, valid_loader)
                     T.save(self.model.state_dict(), self.output_path + f'model-{ep_iter}-{i}.pt')
 
@@ -69,17 +69,27 @@ class Trainer(object):
             pred_ids = prediction.max(dim=-1)[1].tolist()
             answer_ids = answer.tolist()
 
+            decoded_question = []
+            decoded_prediction = []
+            decoded_answer = []
+
             for questions in question_ids:
                 seq = ' '.join([self.vocab.idx2token[question_id] for question_id in questions])
-                print('question -> ', seq)
+                decoded_question.append(seq)
 
             for preds in pred_ids:
                 seq = ' '.join([self.vocab.idx2token[pred_id] for pred_id in preds])
-                print('prediction -> ', seq)
+                decoded_prediction.append(seq)
 
             for answers in answer_ids:
                 seq = ' '.join([self.vocab.idx2token[answer_id] for answer_id in answers])
-                print('answer  -> ', seq)
+                decoded_answer.append(seq)
+
+            for q, p, a in zip(decoded_question, decoded_prediction, decoded_answer)
+                print('********** decoded result **********')
+                print(q + '\n')
+                print(p + '\n')
+                print(a + '\n')
 
 
         print(f'********** evaluating start **********')
