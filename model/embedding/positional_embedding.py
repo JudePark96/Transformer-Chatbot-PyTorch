@@ -23,7 +23,3 @@ class PositionalEmbedding(Module):
 
     def forward(self, x) -> T.Tensor:
         return self.pe[:, :x.size(1)]
-
-
-if __name__ == '__main__':
-    print(PositionalEmbedding({'max_len': 128, 'd_model': 300})(T.LongTensor(320).random_(0, 320).view((32, 10))).shape)
