@@ -18,10 +18,16 @@ def get_base_config() -> OrderedDict:
     :return:
     """
     return OrderedDict({
-        'embedding_size': 100,
+        'embed_dim': 512,
+        'lr': 1e-4,
+        'd_model':512,
+        'num_encoder_layers': 6,
+        'num_decoder_layers': 6,
+        'dim_feedforward': 2048,
         'dropout_rate': 0.25,
         'hidden_size': 256,
-        'num_layers': 6,
         'pad_idx':1,
-        'lr': 1e5,
+        'vocab_size': 6852,
+        'nhead':8,
+        'max_len': 64,
     })
