@@ -47,6 +47,11 @@ class Vocabulary(object):
         else:
             return self.idx2token[idx]
 
+    def get_vocab_size(self) -> int:
+        if len(self.token2idx) == 0:
+            raise ValueError('vocabulary has not been built.')
+        return len(self.token2idx)
+
     def get_seqs(self) -> None:
         self.seqs = [self.tokenizer.morphs(
             seq.strip().lower()) for seq in tqdm(self.corpus)]
