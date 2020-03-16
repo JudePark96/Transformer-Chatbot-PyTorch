@@ -85,7 +85,7 @@ class Trainer(object):
                 seq = ' '.join([self.vocab.idx2token[answer_id] for answer_id in answers])
                 decoded_answer.append(seq)
 
-            for q, p, a in zip(decoded_question, decoded_prediction, decoded_answer)
+            for q, p, a in zip(decoded_question, decoded_prediction, decoded_answer):
                 print('********** decoded result **********')
                 print(q + '\n')
                 print(p + '\n')
