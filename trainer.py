@@ -51,6 +51,7 @@ class Trainer(object):
             for i, (question, answer) in tqdm(enumerate(train_loader)):
                 self.optimizer.zero_grad()
                 output = self.model(question, answer)
+                print(output.shape)
                 output = output.view(-1, output.size(-1))
                 answer = answer.view(-1).long()
                 loss = self.loss_fn(output, answer.to(get_device_setting()))
@@ -63,14 +64,35 @@ class Trainer(object):
                     T.save(self.model.state_dict(), self.output_path + f'model-{ep_iter}-{i}.pt')
 
     def evaluate(self, iteration: int, valid_loader: DataLoader):
+        def decode_sequences(question, prediction, answer):
+            question_ids = question.tolist()
+            pred_ids = prediction.max(dim=-1)[1].tolist()
+            answer_ids = answer.tolist()
+
+            for questions in question_ids:
+                seq = ' '.join([self.vocab.idx2token[question_id] for question_id in questions])
+                print('question -> ', seq)
+
+            for preds in pred_ids:
+                seq = ' '.join([self.vocab.idx2token[pred_id] for pred_id in preds])
+                print('prediction -> ', seq)
+
+            for answers in answer_ids:
+                seq = ' '.join([self.vocab.idx2token[answer_id] for answer_id in answers])
+                print('answer  -> ', seq)
+
+
         print(f'********** evaluating start **********')
 
         self.model.eval()
 
         for i, (question, answer) in tqdm(enumerate(valid_loader)):
             output = self.model(question, answer)
+            decode_sequences(question, output, answer)
+
             output = output.view(-1, output.size(-1))
             answer = answer.view(-1).long()
+
             loss = self.loss_fn(output, answer.to(get_device_setting()))
             print(f'********** evaluating loss: {loss.item()} **********')
 

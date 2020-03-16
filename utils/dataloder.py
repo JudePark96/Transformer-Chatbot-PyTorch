@@ -25,13 +25,8 @@ class ConversationDataset(Dataset):
         q_tokenized = [self.vocab.special_tokens[2]] + self.tokenizer.morphs(self.question[idx])
         a_tokenized = self.tokenizer.morphs(self.answer[idx]) + [self.vocab.special_tokens[3]]
 
-        print(q_tokenized, a_tokenized)
-
-
         q_len = len(q_tokenized)
         a_len = len(a_tokenized)
-
-        print(q_len, a_len)
 
         q = T.ones(self.max_len).long()
         a = T.ones(self.max_len).long()
@@ -44,8 +39,6 @@ class ConversationDataset(Dataset):
 
         q[:q_len] = q_tensor
         a[:a_len] = a_tensor
-
-        print(q, a)
 
         return q, a
 
@@ -65,10 +58,11 @@ def get_loader(question: list,
 
 
 if __name__ == '__main__':
-    train, valid, train_y, valid_y, corpus = load_data('../rsc/data/chatbot_korean.csv')
-    vocab = Vocabulary(corpus)
-    vocab.build_vocab()
-    loader = get_loader(train, train_y, vocab, 128, 32, True)
-    for i, (question, answer) in enumerate(loader):
-        print(question, answer)
-        break
+    pass
+    # train, valid, train_y, valid_y, corpus = load_data('../rsc/data/chatbot_korean.csv')
+    # vocab = Vocabulary(corpus)
+    # vocab.build_vocab()
+    # loader = get_loader(train, train_y, vocab, 128, 32, True)
+    # for i, (question, answer) in enumerate(loader):
+    #     print(question, answer)
+    #     break
