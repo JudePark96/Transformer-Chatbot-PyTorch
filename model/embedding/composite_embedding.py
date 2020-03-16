@@ -17,4 +17,8 @@ class CombineEmbedding(Module):
         self.pos_embedding = PositionalEmbedding(args)
 
     def forward(self, x) -> T.Tensor:
-        return self.token_embedding(x) + self.pos_embedding(x)
+        token_embed = self.token_embedding(x)
+        pos_embed = self.pos_embedding(x)
+
+        print(f'token_embedding: {token_embed.shape}, positional_embedding: {pos_embed.shape}')
+        return token_embed + pos_embed
