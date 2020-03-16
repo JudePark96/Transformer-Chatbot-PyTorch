@@ -27,7 +27,7 @@ class Net(Module):
 
         self.embedding = CombineEmbedding(args=args)
         self.projection = nn.Linear(
-            args['dim_feedforward'], args['vocab_size'])
+            args['d_model'], args['vocab_size'])
 
     def forward(self, question: T.Tensor, answer: T.Tensor) -> T.Tensor:
         """
@@ -35,8 +35,8 @@ class Net(Module):
         :param answer: [bs x seq_len]
         :return:
         """
-        q_embed = self.embedding(question)
-        a_embed = self.embedding(answer)
+        q_embed = self.embedding(question.long())
+        a_embed = self.embedding(answer.long())
 
         q_mask = question == self.args['pad_idx']
         a_mask = answer == self.args['pad_idx']
@@ -55,6 +55,8 @@ class Net(Module):
                                 memory_key_padding_mask=mem_q_mask,
                                 tgt_mask=tgt_mask.to(get_device_setting()))
 
-        logits = T.einsum('ijk->jik', self.projection(attn))
+        attn = T.einsum('ijk->jik', attn)
+        logits = self.projection(attn)
+        print('logits shape ', logits.shape)
 
         return logits
