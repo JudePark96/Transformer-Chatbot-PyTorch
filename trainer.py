@@ -74,15 +74,15 @@ class Trainer(object):
             decoded_answer = []
 
             for questions in question_ids:
-                seq = ' '.join([self.vocab.idx2token[question_id] for question_id in questions])
+                seq = ' '.join([self.vocab.idx2token[question_id] for question_id in questions]).replace('<pad>', '')
                 decoded_question.append(seq)
 
             for preds in pred_ids:
-                seq = ' '.join([self.vocab.idx2token[pred_id] for pred_id in preds])
+                seq = ' '.join([self.vocab.idx2token[pred_id] for pred_id in preds]).replace('<eos>', '')
                 decoded_prediction.append(seq)
 
             for answers in answer_ids:
-                seq = ' '.join([self.vocab.idx2token[answer_id] for answer_id in answers])
+                seq = ' '.join([self.vocab.idx2token[answer_id] for answer_id in answers]).replace('<eos>', '')
                 decoded_answer.append(seq)
 
             for q, p, a in zip(decoded_question, decoded_prediction, decoded_answer):

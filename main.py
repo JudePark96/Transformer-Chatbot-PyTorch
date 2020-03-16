@@ -29,8 +29,8 @@ if __name__ == '__main__':
     vocab = Vocabulary(corpus)
     vocab.build_vocab()
 
-    train_loader = get_loader(train, train_y, vocab, 30, 32, True)
-    valid_loader = get_loader(valid, valid_y, vocab, 30, 32, True)
+    train_loader = get_loader(train, train_y, vocab, 64, 32, True)
+    valid_loader = get_loader(valid, valid_y, vocab, 64, 32, True)
     model_args = get_base_config()
 
     model = Net(model_args).to(get_device_setting())
